@@ -29,18 +29,7 @@
 #include <limits.h>
 #include "erasure_code.h"
 #include "types.h"
-
-void ec_init_tables(int k, int rows, unsigned char *a, unsigned char *g_tbls)
-{
-	int i, j;
-
-	for (i = 0; i < rows; i++) {
-		for (j = 0; j < k; j++) {
-			gf_vect_mul_init(*a++, g_tbls);
-			g_tbls += 32;
-		}
-	}
-}
+#include "ec_prototypes_x86.h"
 
 void ec_encode_data_sse(int len, int k, int rows, unsigned char *g_tbls, unsigned char **data,
 			unsigned char **coding)
@@ -135,23 +124,6 @@ void ec_encode_data_avx2(int len, int k, int rows, unsigned char *g_tbls, unsign
 }
 
 #ifdef HAVE_AS_KNOWS_AVX512
-
-extern int gf_vect_dot_prod_avx512(int len, int k, unsigned char *g_tbls, unsigned char **data,
-				   unsigned char *dest);
-extern int gf_2vect_dot_prod_avx512(int len, int k, unsigned char *g_tbls,
-				    unsigned char **data, unsigned char **coding);
-extern int gf_3vect_dot_prod_avx512(int len, int k, unsigned char *g_tbls,
-				    unsigned char **data, unsigned char **coding);
-extern int gf_4vect_dot_prod_avx512(int len, int k, unsigned char *g_tbls,
-				    unsigned char **data, unsigned char **coding);
-extern void gf_vect_mad_avx512(int len, int vec, int vec_i, unsigned char *gftbls,
-			       unsigned char *src, unsigned char *dest);
-extern void gf_2vect_mad_avx512(int len, int vec, int vec_i, unsigned char *gftbls,
-				unsigned char *src, unsigned char **dest);
-extern void gf_3vect_mad_avx512(int len, int vec, int vec_i, unsigned char *gftbls,
-				unsigned char *src, unsigned char **dest);
-extern void gf_4vect_mad_avx512(int len, int vec, int vec_i, unsigned char *gftbls,
-				unsigned char *src, unsigned char **dest);
 
 void ec_encode_data_avx512(int len, int k, int rows, unsigned char *g_tbls,
 			   unsigned char **data, unsigned char **coding)
@@ -340,8 +312,5 @@ struct slver {
 };
 
 // Version info
-struct slver ec_init_tables_slver_00010068;
-struct slver ec_init_tables_slver = { 0x0068, 0x01, 0x00 };
-
 struct slver ec_encode_data_sse_slver_00020069;
 struct slver ec_encode_data_sse_slver = { 0x0069, 0x02, 0x00 };
