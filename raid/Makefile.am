@@ -29,6 +29,9 @@
 
 lsrc        += 	raid/raid_base.c
 
+lsrc_base_aliases += \
+		raid/raid_base_aliases.c
+
 lsrc_x86_64 +=	raid/xor_gen_sse.asm raid/pq_gen_sse.asm \
 		raid/xor_check_sse.asm raid/pq_check_sse.asm \
 		raid/pq_gen_avx.asm raid/xor_gen_avx.asm \
