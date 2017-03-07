@@ -98,27 +98,29 @@ else
   fi
 fi
 
-# Pick an assembler yasm or nasm
-if test x"$AS" = x""; then
-  if test x"$yasm_knows_avx512" = x"yes"; then
-    AS=yasm
-  elif test x"$nasm_knows_avx512" = x"yes"; then
-    AS=nasm
-  elif test x"$with_modern_yasm" = x"yes"; then
-    AS=yasm
-  elif test x"$with_modern_nasm" = x"yes"; then
-    AS=nasm
-  else
-    AC_MSG_ERROR([No modern yasm or nasm found as required. Yasm should be 1.2.0 or later, and nasm should be v2.11.01 or later.])
+if test \( x"$CPU" = x"x86_32" \) -o \( x"$CPU" = x"x86_64" \); then
+  # Pick an assembler yasm or nasm
+  if test x"$AS" = x""; then
+    if test x"$yasm_knows_avx512" = x"yes"; then
+      AS=yasm
+    elif test x"$nasm_knows_avx512" = x"yes"; then
+      AS=nasm
+    elif test x"$with_modern_yasm" = x"yes"; then
+      AS=yasm
+    elif test x"$with_modern_nasm" = x"yes"; then
+      AS=nasm
+    else
+      AC_MSG_ERROR([No modern yasm or nasm found as required. Yasm should be 1.2.0 or later, and nasm should be v2.11.01 or later.])
+    fi
   fi
-fi
-echo "Using assembler $AS"
+  echo "Using assembler $AS"
 
-if test \( x"$AS" = x"yasm" -a x"$yasm_knows_avx512" = x"yes" \) -o \( x"$AS" = x"nasm" -a x"$nasm_knows_avx512" = x"yes" \); then
-  AC_DEFINE(HAVE_AS_KNOWS_AVX512, [1], [Assembler can do AVX512.])
-  have_as_knows_avx512=yes
-else
-  AC_MSG_RESULT([Assembler does not understand AVX512 opcodes.  Consider upgrading for best performance.])
+  if test \( x"$AS" = x"yasm" -a x"$yasm_knows_avx512" = x"yes" \) -o \( x"$AS" = x"nasm" -a x"$nasm_knows_avx512" = x"yes" \); then
+    AC_DEFINE(HAVE_AS_KNOWS_AVX512, [1], [Assembler can do AVX512.])
+    have_as_knows_avx512=yes
+  else
+    AC_MSG_RESULT([Assembler does not understand AVX512 opcodes.  Consider upgrading for best performance.])
+  fi
 fi
 AM_CONDITIONAL(USE_YASM, test x"$AS" = x"yasm")
 AM_CONDITIONAL(USE_NASM, test x"$AS" = x"nasm")
