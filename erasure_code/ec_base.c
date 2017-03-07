@@ -287,6 +287,18 @@ void gf_vect_mad_base(int len, int vec, int vec_i,
 	}
 }
 
+void ec_init_tables(int k, int rows, unsigned char *a, unsigned char *g_tbls)
+{
+	int i, j;
+
+	for (i = 0; i < rows; i++) {
+		for (j = 0; j < k; j++) {
+			gf_vect_mul_init(*a++, g_tbls);
+			g_tbls += 32;
+		}
+	}
+}
+
 void ec_encode_data_base(int len, int srcs, int dests, unsigned char *v,
 			 unsigned char **src, unsigned char **dest)
 {
@@ -358,3 +370,6 @@ struct slver gf_gen_rs_matrix_slver = { 0x0216, 0x00, 0x00 };
 
 struct slver gf_gen_cauchy1_matrix_slver_00000217;
 struct slver gf_gen_cauchy1_matrix_slver = { 0x0217, 0x00, 0x00 };
+
+struct slver ec_init_tables_slver_00010068;
+struct slver ec_init_tables_slver = { 0x0068, 0x01, 0x00 };
