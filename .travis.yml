@@ -6,9 +6,9 @@ before_script:
     - ./autogen.sh
 env:
     matrix:
-        - CONFIGURE_FLAGS=
-        - CONFIGURE_FLAGS="--host=i686-pc-linux-gnu CFLAGS=\'-m32 -g -O2\'"
-script: ./configure $CONFIGURE_FLAGS && make && make check
+        - CONFIGURE_FLAGS= CFLAGS=
+        - CONFIGURE_FLAGS=--host=i686-pc-linux-gnu CFLAGS="-m32 -g -O2"
+script: ./configure $CONFIGURE_FLAGS CFLAGS="$CFLAGS" && make && make check
 language: c
 compiler:
     - clang
