@@ -7,7 +7,7 @@ before_script:
 env:
     matrix:
         - CONFIGURE_FLAGS=
-        - CONFIGURE_FLAGS="--host=i686-pc-linux-gnu CFLAGS='-m32 -g -O2'"
+        - CONFIGURE_FLAGS="--host=i686-pc-linux-gnu CFLAGS=\'-m32 -g -O2\'"
 script: ./configure $CONFIGURE_FLAGS && make && make check
 language: c
 compiler:
