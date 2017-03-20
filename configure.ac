@@ -98,7 +98,7 @@ else
   fi
 fi
 
-if test \( x"$CPU" = x"x86" \) -o \( x"$CPU" = x"x86_64" \); then
+if test \( x"$CPU" = x"x86_32" \) -o \( x"$CPU" = x"x86_64" \); then
   # Pick an assembler yasm or nasm
   if test x"$AS" = x""; then
     if test x"$yasm_knows_avx512" = x"yes"; then
