@@ -4,13 +4,13 @@ os:
  - linux
  - osx
 before_script:
-    - test $TRAVIS_OS_NAME = linux && sudo apt-get -q update
-    - test $TRAVIS_OS_NAME = linux && sudo apt-get install -y yasm nasm
-    - test $TRAVIS_OS_NAME = osx  && brew install yasm nasm
+    - test $TRAVIS_OS_NAME = linux && sudo apt-get -q update || true
+    - test $TRAVIS_OS_NAME = linux && sudo apt-get install -y yasm nasm || true
+    - test $TRAVIS_OS_NAME = osx  && brew install yasm nasm || true
     - ./autogen.sh
 env:
     matrix:
-        - CONFIGURE_FLAGS= CFLAGS=
+        - CONFIGURE_FLAGS= CFLAGS="-g -O2"
         - CONFIGURE_FLAGS=--host=i686-pc-linux-gnu CFLAGS="-m32 -g -O2"
 matrix:
     exclude:
