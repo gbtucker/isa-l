@@ -37,11 +37,10 @@
 # define ALIGN_SIZE 16
 #endif
 
-//By default, test sse version
 #ifndef FUNCTION_UNDER_TEST
-# define FUNCTION_UNDER_TEST gf_6vect_mad_sse
-# define REF_FUNCTION gf_6vect_dot_prod_sse
-# define VECT 6
+# define FUNCTION_UNDER_TEST gf_vect_mad
+# define REF_FUNCTION gf_vect_dot_prod
+# define VECT 1
 #endif
 
 #ifndef TEST_MIN_SIZE
