@@ -34,7 +34,7 @@
 #include "types.h"
 
 #ifndef ALIGN_SIZE
-# define ALIGN_SIZE 16
+# define ALIGN_SIZE 64
 #endif
 
 //By default, test multibinary version
