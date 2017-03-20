@@ -4,9 +4,9 @@ os:
  - linux
  - osx
 before_script:
-    - test $TRAVIS_OS_NAME = linux && sudo apt-get -q update || true
-    - test $TRAVIS_OS_NAME = linux && sudo apt-get install -y yasm nasm || true
-    - test $TRAVIS_OS_NAME = osx  && brew install yasm nasm || true
+    - if [[ $TRAVIS_OS_NAME == linux ]]; then sudo apt-get -q update; fi
+    - if [[ $TRAVIS_OS_NAME == linux ]]; then sudo apt-get install -y yasm nasm gcc-multilib; fi
+    - if [[ $TRAVIS_OS_NAME = osx ]]; then brew install yasm nasm; fi
     - ./autogen.sh
 env:
     matrix:
