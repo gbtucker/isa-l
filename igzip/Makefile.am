@@ -34,6 +34,8 @@ lsrc        +=	igzip/igzip.c igzip/hufftables_c.c \
 lsrc_base_aliases += \
 		igzip/igzip_base_aliases.c
 
+lsrc_x86_32 +=  igzip/igzip_base_aliases.c
+
 lsrc_x86_64 +=	\
 		igzip/igzip_body_01.asm \
 		igzip/igzip_body_02.asm \
