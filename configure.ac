@@ -115,11 +115,13 @@ if test \( x"$CPU" = x"x86_32" \) -o \( x"$CPU" = x"x86_64" \); then
   fi
   echo "Using assembler $AS"
 
-  if test \( x"$AS" = x"yasm" -a x"$yasm_knows_avx512" = x"yes" \) -o \( x"$AS" = x"nasm" -a x"$nasm_knows_avx512" = x"yes" \); then
-    AC_DEFINE(HAVE_AS_KNOWS_AVX512, [1], [Assembler can do AVX512.])
-    have_as_knows_avx512=yes
-  else
-    AC_MSG_RESULT([Assembler does not understand AVX512 opcodes.  Consider upgrading for best performance.])
+  if test x"$CPU" = x"x86_64"; then
+    if test \( x"$AS" = x"yasm" -a x"$yasm_knows_avx512" = x"yes" \) -o \( x"$AS" = x"nasm" -a x"$nasm_knows_avx512" = x"yes" \); then
+      AC_DEFINE(HAVE_AS_KNOWS_AVX512, [1], [Assembler can do AVX512.])
+      have_as_knows_avx512=yes
+    else
+      AC_MSG_RESULT([Assembler does not understand AVX512 opcodes.  Consider upgrading for best performance.])
+    fi
   fi
 fi
 AM_CONDITIONAL(USE_YASM, test x"$AS" = x"yasm")
@@ -128,11 +130,19 @@ AM_CONDITIONAL(WITH_AVX512, test x"$have_as_knows_avx512" = x"yes")
 
 
 case $host_os in
-     *linux*)	arch=linux   yasm_args="-f elf64";;
-     *darwin*)	arch=darwin  yasm_args="-f macho64 --prefix=_ ";;
-     *netbsd*)	arch=netbsd  yasm_args="-f elf64";;
-     *)		arch=unknown yasm_args="-f elf64";;
+     *linux*)	arch=linux;;
+     *darwin*)	arch=darwin;;
+     *netbsd*)	arch=netbsd;;
+     *)		arch=unknown;;
 esac
+if test x"$CPU" = x"x86_32"; then
+  yasm_args="-f elf32"
+else
+  case $host_os in
+       *darwin*)	yasm_args="-f macho64 --prefix=_ ";;
+       *)		yasm_args="-f elf64";;
+  esac
+fi
 AC_SUBST([yasm_args])
 AM_CONDITIONAL(DARWIN, test x"$arch" = x"darwin")
 AC_MSG_RESULT([Using yasm args target "$arch" "$yasm_args"])
