@@ -48,4 +48,5 @@ perf_tests  +=  raid/xor_gen_perf raid/pq_gen_perf
 examples    += 	raid/xor_example
 
 lsrc_x86_32 +=	raid/xor_gen_sse.asm raid/pq_gen_sse_i32.asm \
-		raid/xor_check_sse.asm raid/pq_check_sse_i32.asm
+		raid/xor_check_sse.asm raid/pq_check_sse_i32.asm \
+		raid/raid_multibinary.asm
