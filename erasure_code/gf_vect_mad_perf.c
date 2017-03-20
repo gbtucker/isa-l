@@ -34,11 +34,10 @@
 #include "types.h"
 #include "test.h"
 
-//By default, test sse version
 #ifndef FUNCTION_UNDER_TEST
-# define FUNCTION_UNDER_TEST gf_4vect_mad_sse
-# define REF_FUNCTION gf_4vect_dot_prod_sse
-# define VECT 4
+# define FUNCTION_UNDER_TEST gf_vect_mad
+# define REF_FUNCTION gf_vect_dot_prod
+# define VECT 1
 #endif
 
 #define str(s) #s

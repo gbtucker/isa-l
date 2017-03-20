@@ -30,7 +30,10 @@
 #ifndef HUFF_CODES_H
 #define HUFF_CODES_H
 
+#if defined(__x86__) || defined(__x86_64__)
 #include <immintrin.h>
+#endif
+
 #include <stdint.h>
 #include <string.h>
 #include <assert.h>
@@ -39,7 +42,7 @@
 
 #ifdef _MSC_VER
 # include <intrin.h>
-#else
+#elif defined(__x86__) || defined(__x86_64__)
 # include <x86intrin.h>
 #endif
 

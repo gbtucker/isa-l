@@ -100,25 +100,22 @@ uint32_t crc32_table_iscsi_base[256] = {
 };
 
 // iSCSI CRC baseline function
-unsigned int crc32_iscsi_base(unsigned char *buffer, int len, unsigned int crc_init)
+unsigned int crc32_iscsi_base(const unsigned char *buffer, int len, unsigned int crc_init)
 {
 	unsigned int crc;
-	unsigned char *p_buf;
-
-	p_buf = (unsigned char *)buffer;
-	unsigned char *p_end = buffer + len;
+	const unsigned char *p_end = buffer + len;
 
 	crc = crc_init;
 
-	while (p_buf < (unsigned char *)p_end) {
-		crc = (crc >> 8) ^ crc32_table_iscsi_base[(crc & 0x000000FF) ^ *p_buf++];
+	while (buffer < p_end) {
+		crc = (crc >> 8) ^ crc32_table_iscsi_base[(crc & 0x000000FF) ^ *buffer++];
 	}
 	return crc;
 }
 
 // crc16_t10dif baseline function
 // Slow crc16 from the definition.  Can be sped up with a lookup table.
-uint16_t crc16_t10dif_base(uint16_t seed, uint8_t * buf, uint64_t len)
+uint16_t crc16_t10dif_base(uint16_t seed, const unsigned char * buf, uint64_t len)
 {
 	size_t rem = seed;
 	unsigned int i, j;
@@ -137,7 +134,7 @@ uint16_t crc16_t10dif_base(uint16_t seed, uint8_t * buf, uint64_t len)
 
 // crc32_ieee baseline function
 // Slow crc32 from the definition.  Can be sped up with a lookup table.
-uint32_t crc32_ieee_base(uint32_t seed, uint8_t * buf, uint64_t len)
+uint32_t crc32_ieee_base(uint32_t seed, const unsigned char * buf, uint64_t len)
 {
 	uint64_t rem = ~seed;
 	unsigned int i, j;
