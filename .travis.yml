@@ -1,14 +1,24 @@
 sudo: required
 dist: trusty
+os:
+ - linux
+ - osx
 before_script:
-    - sudo apt-get -q update
-    - sudo apt-get install -y yasm nasm
+    - [ $TRAVIS_OS_NAME == linux ] && sudo apt-get -q update
+    - [ $TRAVIS_OS_NAME == linux ] && sudo apt-get install -y yasm nasm
+    - [ $TRAVIS_OS_NAME == osx ] && brew install yasm nasm
     - ./autogen.sh
 env:
     matrix:
         - CONFIGURE_FLAGS= CFLAGS=
         - CONFIGURE_FLAGS=--host=i686-pc-linux-gnu CFLAGS="-m32 -g -O2"
-script: ./configure $CONFIGURE_FLAGS CFLAGS="$CFLAGS" && make && make check
+matrix:
+    exclude:
+        - os: osx
+          env: CONFIGURE_FLAGS=--host=i686-pc-linux-gnu CFLAGS="-m32 -g -O2"
+
+
+script: ./configure $CONFIGURE_FLAGS CFLAGS="$CFLAGS" || cat config.log && make && make check
 language: c
 compiler:
     - clang
