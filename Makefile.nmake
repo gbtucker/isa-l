@@ -29,7 +29,7 @@
 
 objs =  \
 	bin\ec_base.obj \
-	bin\ec_highlevel_func.obj \
+	bin\ec_highlevel_x86.obj \
 	bin\ec_multibinary.obj \
 	bin\gf_2vect_dot_prod_avx.obj \
 	bin\gf_2vect_dot_prod_avx2.obj \
