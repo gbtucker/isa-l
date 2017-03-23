@@ -1,5 +1,5 @@
 /**********************************************************************
-  Copyright(c) 2011-2015 Intel Corporation All rights reserved.
+  Copyright(c) 2017 IBM Corporation All rights reserved.
 
   Redistribution and use in source and binary forms, with or without
   modification, are permitted provided that the following conditions 
@@ -10,7 +10,7 @@
       notice, this list of conditions and the following disclaimer in
       the documentation and/or other materials provided with the
       distribution.
-    * Neither the name of Intel Corporation nor the names of its
+    * Neither the name of IBM Corporation nor the names of its
       contributors may be used to endorse or promote products derived
       from this software without specific prior written permission.
 
@@ -27,108 +27,88 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **********************************************************************/
 
+#include "crc.h"
+#include "crc64.h"
 
-/**
- *  @file  crc.h
- *  @brief CRC functions.
- */
-
-
-#ifndef _CRC_H_
-#define _CRC_H_
-
-#include <stdint.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
-/* Multi-binary functions */
-
-/**
- * @brief Generate CRC from the T10 standard, runs appropriate version.
- *
- * This function determines what instruction sets are enabled and
- * selects the appropriate version at runtime.
- *
- * @returns 16 bit CRC
- */
 uint16_t crc16_t10dif(
 	uint16_t init_crc,        //!< initial CRC value, 16 bits
 	const unsigned char *buf, //!< buffer to calculate CRC on
 	uint64_t len              //!< buffer length in bytes (64-bit data)
-	);
-
-
-/**
- * @brief Generate CRC from the IEEE standard, runs appropriate version.
- *
- * This function determines what instruction sets are enabled and
- * selects the appropriate version at runtime.
- *
- * @returns 32 bit CRC
- */
+	)
+{
+	return crc16_t10dif_base(init_crc, buf, len);
+}
 
 uint32_t crc32_ieee(
 	uint32_t init_crc,        //!< initial CRC value, 32 bits
 	const unsigned char *buf, //!< buffer to calculate CRC on
 	uint64_t len              //!< buffer length in bytes (64-bit data)
-	);
+	)
+{
+	return crc32_ieee_base(init_crc, buf, len);
+}
 
 
-/**
- * @brief ISCSI CRC function, runs appropriate version.
- *
- * This function determines what instruction sets are enabled and
- * selects the appropriate version at runtime.
- *
- * @returns 32 bit CRC
- */
 unsigned int crc32_iscsi(
 	unsigned char *buffer, //!< buffer to calculate CRC on
 	int len,               //!< buffer length in bytes
 	unsigned int init_crc  //!< initial CRC value
-	);
-
-
-/* Base functions */
-
-/**
- * @brief ISCSI CRC function, baseline version
- * @returns 32 bit CRC
- */
-unsigned int crc32_iscsi_base(
-	const unsigned char *buffer,	//!< buffer to calculate CRC on
-	int len, 			//!< buffer length in bytes
-	unsigned int crc_init		//!< initial CRC value
-	);
-
-
-/**
- * @brief Generate CRC from the T10 standard, runs baseline version
- * @returns 16 bit CRC
- */
-uint16_t crc16_t10dif_base(
-	uint16_t seed,			//!< initial CRC value, 16 bits
-	const unsigned char *buf,	//!< buffer to calculate CRC on
-	uint64_t len 			//!< buffer length in bytes (64-bit data)
-	);
-
-
-/**
- * @brief Generate CRC from the IEEE standard, runs baseline version
- * @returns 32 bit CRC
- */
-uint32_t crc32_ieee_base(
-	uint32_t seed, 			//!< initial CRC value, 32 bits
-	const unsigned char *buf,	//!< buffer to calculate CRC on
-	uint64_t len 			//!< buffer length in bytes (64-bit data)
-	);
-
-
-#ifdef __cplusplus
+	)
+{
+	return crc32_iscsi_base(buffer, len, init_crc);
 }
-#endif
 
-#endif // _CRC_H_
+uint64_t crc64_ecma_refl(
+	uint64_t init_crc,        //!< initial CRC value, 64 bits
+	const unsigned char *buf, //!< buffer to calculate CRC on
+	uint64_t len              //!< buffer length in bytes (64-bit data)
+	)
+{
+	return crc64_ecma_refl_base(init_crc, buf, len);
+}
+
+uint64_t crc64_ecma_norm(
+	uint64_t init_crc,        //!< initial CRC value, 64 bits
+	const unsigned char *buf, //!< buffer to calculate CRC on
+	uint64_t len              //!< buffer length in bytes (64-bit data)
+	)
+{
+	return crc64_ecma_norm_base(init_crc, buf, len);
+}
+
+uint64_t crc64_iso_refl(
+	uint64_t init_crc,        //!< initial CRC value, 64 bits
+	const unsigned char *buf, //!< buffer to calculate CRC on
+	uint64_t len              //!< buffer length in bytes (64-bit data)
+	)
+{
+	return crc64_iso_refl_base(init_crc, buf, len);
+}
+
+uint64_t crc64_iso_norm(
+	uint64_t init_crc,        //!< initial CRC value, 64 bits
+	const unsigned char *buf, //!< buffer to calculate CRC on
+	uint64_t len              //!< buffer length in bytes (64-bit data)
+	)
+{
+	return crc64_iso_norm_base(init_crc, buf, len);
+}
+
+uint64_t crc64_jones_refl(
+	uint64_t init_crc,        //!< initial CRC value, 64 bits
+	const unsigned char *buf, //!< buffer to calculate CRC on
+	uint64_t len              //!< buffer length in bytes (64-bit data)
+	)
+{
+	return crc64_jones_refl_base(init_crc, buf, len);
+}
+
+uint64_t crc64_jones_norm(
+	uint64_t init_crc,        //!< initial CRC value, 64 bits
+	const unsigned char *buf, //!< buffer to calculate CRC on
+	uint64_t len              //!< buffer length in bytes (64-bit data)
+	)
+{
+	return crc64_jones_norm_base(init_crc, buf, len);
+}
+

@@ -27,16 +27,23 @@
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ########################################################################
 
-lsrc        += 	igzip/igzip.c igzip/hufftables_c.c \
+lsrc        +=	igzip/igzip.c igzip/hufftables_c.c \
+		igzip/crc_data.c \
+		igzip/igzip_base.c
+
+lsrc_base_aliases += \
+		igzip/igzip_base_aliases.c
+
+lsrc_x86_32 +=  igzip/igzip_base_aliases.c
+
+lsrc_x86_64 +=	\
 		igzip/igzip_body_01.asm \
 		igzip/igzip_body_02.asm \
 		igzip/igzip_body_04.asm \
 		igzip/igzip_finish.asm \
-		igzip/crc_data.asm \
 		igzip/rfc1951_lookup.asm \
 		igzip/crc32_gzip.asm igzip/detect_repeated_char.asm \
 		igzip/igzip_multibinary.asm \
-		igzip/igzip_base.c \
 		igzip/igzip_update_histogram_01.asm \
 		igzip/igzip_update_histogram_04.asm \
 		igzip/igzip_decode_block_stateless_01.asm \
@@ -84,7 +91,7 @@ lsrc        += igzip/huff_codes.c
 other_tests += igzip/igzip_inflate_perf
 other_tests += igzip/igzip_inflate_test
 other_tests += igzip/igzip_fuzz_inflate
-lsrc   += igzip/igzip_inflate.c
+lsrc        += igzip/igzip_inflate.c
 other_src   += igzip/crc_inflate.h
 
 igzip_inflate_perf: LDLIBS += -lz

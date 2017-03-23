@@ -27,7 +27,10 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **********************************************************************/
 
+#if defined(__x86__) || defined(__x86_64__)
 #include <immintrin.h>
+#endif
+
 #include <stdint.h>
 #include <string.h>
 #include <assert.h>

@@ -35,7 +35,7 @@
 #ifdef _MSC_VER
 # include <intrin.h>
 # define inline __inline
-#else
+#elif defined(__x86__) || defined(__x86_64__)
 # include <x86intrin.h>
 #endif
 
