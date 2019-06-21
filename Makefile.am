@@ -8,6 +8,11 @@ noinst_LTLIBRARIES =
 bin_PROGRAMS =
 INCLUDE = -I $(srcdir)/include/
 
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = libisal.pc
+EXTRA_DIST += libisal.pc.in
+CLEANFILES += libisal.pc
+
 lsrc=
 src_include=
 extern_hdrs=
@@ -44,7 +49,7 @@ include mem/Makefile.am
 
 # LIB version info not necessarily the same as package version
 LIBISAL_CURRENT=2
-LIBISAL_REVISION=25
+LIBISAL_REVISION=26
 LIBISAL_AGE=0
 
 lib_LTLIBRARIES = libisal.la
